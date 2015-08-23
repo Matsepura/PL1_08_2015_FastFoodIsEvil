@@ -9,7 +9,6 @@
 #import "GameViewController.h"
 #import "PL1MyGameScene.h"
 
-
 @implementation SKScene (Unarchive)
 
 + (instancetype)unarchiveFromFile:(NSString *)file {
@@ -41,6 +40,7 @@
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
+    skView.ignoresSiblingOrder = NO;
     /* Sprite Kit applies additional optimizations to improve rendering performance */
     
     // Create and configure the scene.
