@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
     PL1MyGameSceneInitial,
-    PL1MyGameSceneReadyToThrow
+    PL1MyGameSceneReadyToThrow,
+    PL1MyGameSceneStateDragging
 };
 
 
@@ -20,6 +21,7 @@ typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
 @property (nonatomic) PL1MyGameSceneState state;
 @property (nonatomic, weak) SKPhysicsBody *bodyToThrow;
 @property (nonatomic, weak) SKNode *nodeToThrow;
+@property (nonatomic) CGPoint startDragPosition;
 
 @end
 
@@ -65,14 +67,54 @@ typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
     }
 }
 
+#pragma mark - Touch Hangling
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    switch (self.state) {
+        case PL1MyGameSceneStateDragging:{
+            UITouch *anyTouch = [touches anyObject];
+            CGPoint touchPosition = [anyTouch locationInNode:self];
+            self.nodeToThrow.position = touchPosition;
+            
+        }break;
+            
+        default:
+            break;
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    switch (self.state) {
+        case PL1MyGameSceneStateDragging:{
+            CGPoint touchFinishPosition = [[touches anyObject] locationInNode: self];
+        } break;
+            
+        default:
+            break;
+    }
+    
+}
+
 #pragma mark - Game Mechanics
+
+-(void)throwNode:(SKNode *)aNode withDirection:(CGVector)direction
+{
+    
+}
 
 -(void)putNodeToBallPosition:(SKNode *)aNode
 {
     self.nodeToThrow = aNode;
     self.bodyToThrow = aNode.physicsBody;
     aNode.physicsBody = nil;
-    [aNode runAction:[SKAction moveTo:CGPointMake(40, 150) duration:1] completion:^{
+    [aNode runAction:[SKAction moveTo:CGPointMake(150, 200) duration:1] completion:^{
         self.state = PL1MyGameSceneReadyToThrow;
     }];
 }
