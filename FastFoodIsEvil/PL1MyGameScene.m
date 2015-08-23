@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
 -(void)didMoveToView:(SKView *)view
 {
     if (self.didInitContent == NO) {
-        [self didInitContent];
+        [self initContent];
     }
 }
 
