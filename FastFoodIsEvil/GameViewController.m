@@ -7,6 +7,7 @@
 //
 
 #import "GameViewController.h"
+#import "PL1MyGameScene.h"
 
 
 @implementation SKScene (Unarchive)
@@ -20,7 +21,7 @@
                                             error:nil];
     NSKeyedUnarchiver *arch = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
 //    [arch setClass:self forClassName:@"SKScene"];
-    [arch setClass:self forClassName:@"Level1"];
+    [arch setClass:self forClassName:@"SKScene"];
 
     SKScene *scene = [arch decodeObjectForKey:NSKeyedArchiveRootObjectKey];
     [arch finishDecoding];
@@ -43,7 +44,7 @@
     /* Sprite Kit applies additional optimizations to improve rendering performance */
     
     // Create and configure the scene.
-    SKScene *scene = [SKScene unarchiveFromFile:@"Level1"];
+    SKScene *scene = [PL1MyGameScene unarchiveFromFile:@"Level1"];
     scene.scaleMode = SKSceneScaleModeAspectFill;
     
     // Present the scene.
