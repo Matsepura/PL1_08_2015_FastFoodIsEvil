@@ -18,6 +18,8 @@ typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
 
 @property (nonatomic) BOOL didInitContent;
 @property (nonatomic) PL1MyGameSceneState state;
+@property (nonatomic, weak) SKPhysicsBody *bodyToThrow;
+@property (nonatomic, weak) SKNode *nodeToThrow;
 
 @end
 
@@ -37,6 +39,10 @@ typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
     
     SKPhysicsBody *border = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     self.physicsBody = border;
+    [self runAction:[SKAction waitForDuration:1] completion:^{
+        self.didInitContent = YES;
+        [self updateState];
+    }];
 
 }
 
@@ -63,6 +69,9 @@ typedef NS_ENUM(NSInteger, PL1MyGameSceneState) {
 
 -(void)putNodeToBallPosition:(SKNode *)aNode
 {
+    self.nodeToThrow = aNode;
+    self.bodyToThrow = aNode.physicsBody;
+    aNode.physicsBody = nil;
     [aNode runAction:[SKAction moveTo:CGPointMake(40, 150) duration:1] completion:^{
         self.state = PL1MyGameSceneReadyToThrow;
     }];
